@@ -1,16 +1,16 @@
 const FD_STDOUT: usize = 1;
-use core::{slice, str};
-// utf8
+
+// 这里是只支持 utf8
 pub fn sys_write(fd: usize, buf: *const u8, len: usize) -> isize {
     match fd {
         FD_STDOUT => {
-            let slice = unsafe { slice::from_raw_parts(buf, len) };
-            let str = str::from_utf8(slice).unwrap();
-            println!("{}", str);
+            let slice = unsafe { core::slice::from_raw_parts(buf, len) };
+            let str = core::str::from_utf8(slice).unwrap();
+            print!("{}", str);
             len as isize
         }
         _ => {
-            panic!("Unsupported fd in sys_write");
+            panic!("Unsupported fd in sys_write!");
         }
     }
 }

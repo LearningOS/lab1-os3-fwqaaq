@@ -1,9 +1,10 @@
 mod context;
 
-use crate::syscall::syscall;
-use crate::task::{self, suspend_current_and_run_next};
-use crate::timer;
-
+use crate::{
+    syscall::syscall,
+    task::{self, suspend_current_and_run_next},
+    timer,
+};
 use riscv::register::{
     mtvec::TrapMode,
     scause::{self, Exception, Interrupt, Trap},
@@ -56,6 +57,7 @@ pub fn trap_handler(ctx: &mut TrapContext) -> &mut TrapContext {
     ctx
 }
 
+// 这里也许会导致嵌套中断？
 pub fn enable_timer_interrupt() {
     unsafe { sie::set_stimer() }
 }

@@ -1,12 +1,13 @@
 use crate::config::MAX_SYSCALL_NUM;
+
 use super::context::TaskContext;
 
-#[derive(Clone, Copy, PartialEq,Eq)]
-pub enum TaskStatus{
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub enum TaskStatus {
     UnInit,
     Ready,
     Running,
-    Exited
+    Exited,
 }
 
 #[derive(Clone)]
@@ -14,7 +15,7 @@ pub struct TaskControlBlock {
     pub task_ctx: TaskContext,
     pub task_status: TaskStatus,
     pub task_start_time: usize,
-    pub task_syscall_times: [u32; MAX_SYSCALL_NUM]
+    pub task_syscall_times: [u32; MAX_SYSCALL_NUM],
 }
 
 impl TaskControlBlock {
@@ -22,8 +23,8 @@ impl TaskControlBlock {
         Self {
             task_ctx: TaskContext::zero_init(),
             task_status: TaskStatus::UnInit,
-            task_start_time:0,
-            task_syscall_times: [0;MAX_SYSCALL_NUM]
+            task_start_time: 0,
+            task_syscall_times: [0; MAX_SYSCALL_NUM],
         }
     }
 }

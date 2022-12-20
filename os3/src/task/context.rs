@@ -1,8 +1,9 @@
 #[repr(C)]
 #[derive(Clone)]
-pub struct TaskContext{
+pub struct TaskContext {
     ra: usize,
     sp: usize,
+    // callee-saved 寄存器
     s: [usize; 12],
 }
 
@@ -11,7 +12,7 @@ impl TaskContext {
         Self {
             ra: 0,
             sp: 0,
-            s: [0;12],
+            s: [0; 12],
         }
     }
     pub fn goto_restore(kernel_stack_ptr: usize) -> Self {
@@ -21,7 +22,7 @@ impl TaskContext {
         Self {
             ra: __restore as usize,
             sp: kernel_stack_ptr,
-            s: [0;12]
+            s: [0; 12],
         }
     }
 }

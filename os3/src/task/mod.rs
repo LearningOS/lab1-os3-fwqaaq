@@ -1,11 +1,15 @@
+use core::mem;
+
+use lazy_static::lazy_static;
+
 pub use self::task::TaskStatus;
 use self::{context::TaskContext, switch::__switch, task::TaskControlBlock};
-use crate::config::{MAX_APP_NUM, MAX_SYSCALL_NUM};
-use crate::loader;
-use crate::sync::UPSafeCell;
-use crate::timer;
-use core::mem;
-use lazy_static::lazy_static;
+use crate::{
+    config::{MAX_APP_NUM, MAX_SYSCALL_NUM},
+    loader,
+    sync::UPSafeCell,
+    timer,
+};
 
 pub mod context;
 pub mod switch;
@@ -32,7 +36,7 @@ lazy_static! {
             .enumerate()
             .take(num_app)
         {
-            t.task_ctx = TaskContext::goto_restore(loader::init_app_cx(i));
+            t.task_ctx = TaskContext::goto_restore(loader::init_app_ctx(i));
             t.task_status = TaskStatus::Ready;
             t.task_start_time = timer::get_time_ms();
         }
